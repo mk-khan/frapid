@@ -18,7 +18,7 @@ namespace Frapid.Reports.Helpers
                             .AddMilliseconds(milliseconds)
                             .ToLocalTime()
                             .Date
-                            .ToString("MM-dd-yyyy");
+                            .ToString("MM-dd-yyyy HH:mm");
                     }
                     else
                     {
