@@ -1,3 +1,20 @@
+function getNewUTCDateOnly(datePickerId)
+{
+	var getDate = $(datePickerId).datepicker("getDate");
+	if(getDate == "" || getDate == null)
+		return null;
+	
+	return window.moment.utc(new Date(moment(getDate).format("YYYY-MM-DD")));
+}
+
+function ConvertToNewUTCDateOnly(getDate)
+{
+	if(getDate == "" || getDate == null)
+		return null;
+	
+	return window.moment.utc(new Date(moment(getDate).format("YYYY-MM-DD")));
+}
+
 function setMoments() {
     const els = $(".refreshing.moment");
 
