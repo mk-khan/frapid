@@ -4,7 +4,7 @@ function getNewUTCDateOnly(datePickerId)
 	if(getDate == "" || getDate == null)
 		return null;
 	
-	return window.moment.utc(new Date(moment(getDate).format("YYYY-MM-DD")));
+	return moment.utc(new Date(moment(getDate).format("YYYY-MM-DD")));
 }
 
 function ConvertToNewUTCDateOnly(getDate)
@@ -12,7 +12,7 @@ function ConvertToNewUTCDateOnly(getDate)
 	if(getDate == "" || getDate == null)
 		return null;
 	
-	return window.moment.utc(new Date(moment(getDate).format("YYYY-MM-DD")));
+	return moment.utc(new Date(moment(getDate).format("YYYY-MM-DD")));
 }
 
 function setMoments() {
@@ -23,14 +23,13 @@ function setMoments() {
         var val = el.attr("data-time");
 
         if (!val) {
-            val = window.parseInt(el.attr("data-server-time"));
+            val = window.parseInt2(el.attr("data-server-time"));
         };
 
         const time = new Date(val);
 
         if (!isNaN(time)) {
             el.text(window.moment(time).fromNow());
-            el.attr("title", time.toString());
         };
     });
 
@@ -857,7 +856,10 @@ setMoments();
 $(document).ready(function () {
     function updateLanguage() {
         function update(cultureCode) {
-            document.cookie = "culture=" + cultureCode + ";path=/";
+            const expiryDate = new Date();
+            expiryDate.setTime(expiryDate.getTime() + (1 * 24 * 60 * 60 * 1000));
+            const expires = "; expires=" + expiryDate.toGMTString();
+            document.cookie = "culture=" + cultureCode + expires + "; path=/";
         };
 
         const el = $(".select.language.dropdown");
