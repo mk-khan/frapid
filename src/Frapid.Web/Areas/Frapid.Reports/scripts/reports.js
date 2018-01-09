@@ -74,9 +74,8 @@ $("#ShowButton").off("click").on("click", function () {
     $.each(dateEls, function () {
         const el = $(this);
         const parameter = el.attr("data-paramter");
-        const value = el.datepicker("getDate").valueOf();
+        const value = ConvertToNewUTCDateOnly(el.datepicker("getDate")).valueOf();
         const id = el.attr("id");
-
         persist.push({
             id: id,
             value: value
@@ -205,7 +204,7 @@ function getXml(reportTitle) {
 
     contents += `<Report title="${reportTitle}"  exportedOn="${(new Date()).toLocaleString()}" exportedBy="${window
         .metaView.Name}" userId="${window.metaView.UserId}" loginId="${window.metaView.LoginId}" officeId="${window
-        .metaView.OfficeId}">`;
+            .metaView.OfficeId}">`;
 
     var tables;
 
@@ -342,6 +341,7 @@ $(".zoom.in.button").off("click").on("click", function () {
 $(".mail.button").off("click").on("click", function () {
     $('#MessageTextArea').trumbowyg({ svgPath: "/scripts/trumbowyg/dist/ui/icons.svg" });
     $("#EmailModal").modal("show");
+    $('.ui.dimmer').css('background-color', 'transparent');
 });
 
 
@@ -409,7 +409,7 @@ function removeToolbar() {
 };
 
 if (top.parent) {
-    if(typeof(top.parent.removeToolbar) === "function"){
+    if (typeof (top.parent.removeToolbar) === "function") {
         top.parent.removeToolbar();
     };
 };

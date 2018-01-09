@@ -81,8 +81,7 @@ function serializeForm(el) {
                 if(!el.find("input").val().trim()){
                     return null;
                 };
-
-                return el.calendar("get date");
+				return ConvertToNewUTCDateOnly(el.datepicker("getDate"));
             case "checkbox":
                 return el.is(":checked");
             case "number":                
