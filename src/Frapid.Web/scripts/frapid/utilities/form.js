@@ -76,12 +76,12 @@ function serializeForm(el) {
                     return null;
                 };
                 
-                return el.datepicker("getDate");
+                return ConvertToNewUTCDateOnly(el.datepicker("getDate"));
             case "calendar":
                 if(!el.find("input").val().trim()){
                     return null;
                 };
-				return ConvertToNewUTCDateOnly(el.datepicker("getDate"));
+                return el.calendar("get date");
             case "checkbox":
                 return el.is(":checked");
             case "number":                
