@@ -38,6 +38,8 @@ var getQuerystringFilters = function () {
     function isString(propertyName) {
         var type = getType(propertyName);
 
+        console.log(propertyName);
+
         if (stringTypes.indexOf(type) > -1) {
             return true;
         };
@@ -51,7 +53,7 @@ var getQuerystringFilters = function () {
             val = null;
         } else {
             if (wholeNumbers.indexOf(type) > -1) {
-                val = window.parseInt(val);
+                val = window.parseInt2(val);
             } else if (decimalNumber.indexOf(type) > -1) {
                 val = window.parseFloat2(val);
             } else if (dateTypes.indexOf(type) > -1) {
@@ -289,6 +291,7 @@ function getSelectedFilter() {
 
     $.each(els, function () {
         var el = $(this);
+
         var columnName = el.attr("data-column-name");
         var dataType = el.attr("data-type");
         var filterCondition = el.attr("data-filter-condition");

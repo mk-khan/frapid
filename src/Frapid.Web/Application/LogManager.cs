@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Frapid.Configuration;
+using Frapid.Configuration.Models;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -11,19 +12,30 @@ namespace Frapid.Web.Application
     {
         private static string GetLogDirectory()
         {
-            string path = ConfigurationManager.GetConfigurationValue("ParameterConfigFileLocation", "ApplicationLogDirectory");
+            string fallbackPath = PathMapper.MapPath("~/Resource/Temp");
+            var parameter = Parameter.Get();
+            string path = parameter.ApplicationLogDirectory;
 
             if (string.IsNullOrWhiteSpace(path))
             {
-                return PathMapper.MapPath("~/Resource/Temp");
+                return fallbackPath;
             }
 
-            if (!Directory.Exists(path))
+            try
             {
-                Directory.CreateDirectory(path);
-            }
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
 
-            return path;
+                return path;
+            }
+            catch
+            {
+                //It is counterproductive to log errors
+                //when you know that you don't have access to the log directory
+                return fallbackPath;
+            }
         }
 
         private static string GetLogFileName()
@@ -35,7 +47,8 @@ namespace Frapid.Web.Application
 
         private static LoggerConfiguration GetConfiguration()
         {
-            string minimumLogLevel = ConfigurationManager.GetConfigurationValue("ParameterConfigFileLocation", "MinimumLogLevel");
+            var parameter = Parameter.Get();
+            string minimumLogLevel = parameter.MinimumLogLevel;
 
             var levelSwitch = new LoggingLevelSwitch();
 
